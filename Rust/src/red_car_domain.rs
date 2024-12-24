@@ -269,7 +269,7 @@ impl VehicleKind {
         }
     }
 }
-
+ 
 impl Vehicle {
     pub fn new(kind: VehicleKind, position: [usize; 2], name: String) -> Self {
         Self {
