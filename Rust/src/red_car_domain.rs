@@ -1,9 +1,9 @@
-#[derive(Clone)]
+#[derive(Clone,Debug)]
 pub struct Grid {
-    row_size: usize,
-    col_size: usize,                 // Size of the grid (n x m)
-    cells: Vec<Vec<Option<String>>>, // 2D grid holding objects like "BC" or "RT"
-    objects: Vec<Vehicle>,
+    pub row_size: usize,
+    pub col_size: usize,                 // Size of the grid (n x m)
+    pub cells: Vec<Vec<Option<String>>>, // 2D grid holding objects like "BC" or "RT"
+   pub objects: Vec<Vehicle>,
 }
 
 impl Grid {
@@ -16,7 +16,7 @@ impl Grid {
             objects: vec![],
         }
     }
-    fn display(&self) {
+    pub fn display(&self) {
         for row in &self.cells {
             for cell in row {
                 match cell {
@@ -76,7 +76,7 @@ impl Grid {
         Ok(format!("{} placed in {}", object.name(), positions))
     }
 
-    fn generate_moves(&self) -> Vec<(Grid, String)> {
+    pub fn generate_moves(&self) -> Vec<(Grid, String)> {
         let mut new_grids = Vec::new();
 
         for object in &self.objects {
@@ -233,7 +233,7 @@ impl Grid {
 }
 
 #[derive(Clone, Copy, Debug)]
-enum VehicleKind {
+pub enum VehicleKind {
     HorizontalCar,
     HorizontalTruck,
     VerticalCar,
@@ -246,10 +246,10 @@ enum Direction {
     Vertical,
 }
 #[derive(Clone, Debug)]
-struct Vehicle {
-    kind: VehicleKind,
-    position: [usize; 2],
-    name: String,
+pub struct Vehicle {
+    pub kind: VehicleKind,
+    pub position: [usize; 2],
+    pub name: String,
 }
 
 impl VehicleKind {

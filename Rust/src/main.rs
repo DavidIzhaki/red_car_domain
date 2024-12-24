@@ -1,28 +1,30 @@
-mod red_car_domain2;
-
-use red_car_domain2::{Grid, HorizontalCar, HorizontalTruck, VerticalCar, VerticalTruck};
+mod red_car_domain;
+use red_car_domain::*;
+mod search;
+use search::a_star;
 
 fn main() {
-    // Create a 6x6 grid
-    let mut grid = Grid::new(6, 6);
+    // Load the problem definition from the `problems` directory
+    include!("./problems/Red_Car_Problem1_Beginner.rs");
 
-    // Create objects
-    let horizontal_car = HorizontalCar::new(0, 0, "HC1".to_string());
-    let vertical_car = VerticalCar::new(0, 5, "VC1".to_string());
-    let horizontal_truck = HorizontalTruck::new(3, 0, "HT1".to_string());
-    let vertical_truck = VerticalTruck::new(3, 5, "VT1".to_string());
+    // Ensure the problem grid is initialized properly
+    let problem_grid = problem();
 
-    // Place objects on the grid
-    grid.place_object(&horizontal_car)
-        .expect("Failed to place HorizontalCar");
-    grid.place_object(&vertical_car)
-        .expect("Failed to place VerticalCar");
-    grid.place_object(&horizontal_truck)
-        .expect("Failed to place HorizontalTruck");
-    grid.place_object(&vertical_truck)
-        .expect("Failed to place VerticalTruck");
+    // Display the initial grid
+    println!("Initial Grid:");
+    problem_grid.display();
 
-    // Display the grid
-    println!("Initial Grid State:");
-    grid.display();
+    // Solve the problem using A* search
+    match a_star(problem_grid) {
+        Some(path) => {
+            println!("Solution Found:");
+            for (i, step) in path.iter().enumerate() {
+                println!("Step {}:", i + 1);
+                step.display();
+            }
+        }
+        None => {
+            println!("No solution found.");
+        }
+    }
 }
